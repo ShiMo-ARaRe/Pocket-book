@@ -1,96 +1,109 @@
 #!/usr/bin/env node
+
+// www文件是整个项目的入口！
+
 //导入 db 函数
 const db = require('../db/db');
 
+// 这么做的目的：先让数据库连接成功后才能执行后续代码
 //调用 db 函数
 db(() => {
+  
   /**
-   * Module dependencies.
-   */
+ * Module dependencies.
+ */
+// 模块依赖
 
-  var app = require('../app');
-  var debug = require('debug')('accounts:server');
-  var http = require('http');
+var app = require('../app'); // 引入app模块
+var debug = require('debug')('accounts:server'); // 引入debug模块并设置命名空间为'accounts:server'
+var http = require('http'); // 引入http模块
 
-  /**
-   * Get port from environment and store in Express.
-   */
+/**
+ * Get port from environment and store in Express.
+ */
+// 从环境变量中获取端口并存储在Express中
 
-  var port = normalizePort(process.env.PORT || '80');
-  app.set('port', port);
+var port = normalizePort(process.env.PORT || '80'); // 设置端口
+app.set('port', port); // 设置Express应用的端口
 
-  /**
-   * Create HTTP server.
-   */
+/**
+ * Create HTTP server.
+ */
+// 创建HTTP服务器
 
-  var server = http.createServer(app);
+var server = http.createServer(app); // 使用Express应用创建HTTP服务器
 
-  /**
-   * Listen on provided port, on all network interfaces.
-   */
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+// 监听指定端口，对所有网络接口进行监听
 
-  server.listen(port);
-  server.on('error', onError);
-  server.on('listening', onListening);
+server.listen(port); // 监听指定端口
+server.on('error', onError); // 监听服务器错误事件
+server.on('listening', onListening); // 监听服务器监听事件
 
-  /**
-   * Normalize a port into a number, string, or false.
-   */
+/**
+ * Normalize a port into a number, string, or false.
+ */
+// 将端口规范化为数字、字符串或false
 
-  function normalizePort(val) {
-    var port = parseInt(val, 10);
+function normalizePort(val) {
+  var port = parseInt(val, 10); // 将传入的值转换为整数
 
-    if (isNaN(port)) {
-      // named pipe
-      return val;
-    }
-
-    if (port >= 0) {
-      // port number
-      return port;
-    }
-
-    return false;
+  if (isNaN(port)) {
+    // 如果转换后的端口不是一个有效的数字
+    return val; // 返回原始值
   }
 
-  /**
-   * Event listener for HTTP server "error" event.
-   */
+  if (port >= 0) {
+    // 如果转换后的端口是一个大于等于0的数字
+    return port; // 返回转换后的端口
+  }
 
-  function onError(error) {
-    if (error.syscall !== 'listen') {
+  return false; // 其他情况返回false
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+// HTTP服务器的“error”事件监听器
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    // 如果错误不是由监听函数抛出的
+    throw error; // 抛出错误
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // 处理特定的监听错误并输出友好的错误消息
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
       throw error;
-    }
-
-    var bind = typeof port === 'string'
-      ? 'Pipe ' + port
-      : 'Port ' + port;
-
-    // handle specific listen errors with friendly messages
-    switch (error.code) {
-      case 'EACCES':
-        console.error(bind + ' requires elevated privileges');
-        process.exit(1);
-        break;
-      case 'EADDRINUSE':
-        console.error(bind + ' is already in use');
-        process.exit(1);
-        break;
-      default:
-        throw error;
-    }
   }
+}
 
-  /**
-   * Event listener for HTTP server "listening" event.
-   */
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+// HTTP服务器的“listening”事件监听器
 
-  function onListening() {
-    var addr = server.address();
-    var bind = typeof addr === 'string'
-      ? 'pipe ' + addr
-      : 'port ' + addr.port;
-    debug('Listening on ' + bind);
-  }
+function onListening() {
+  var addr = server.address(); // 获取服务器地址信息
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  debug('Listening on ' + bind); // 输出服务器监听的地址信息
+}
 
 })
