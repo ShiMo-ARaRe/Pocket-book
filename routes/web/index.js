@@ -1,7 +1,10 @@
+// 记账本的增删查，以及用session对用户进行身份验证
+
 //导入 express
 const express = require('express');
 //导入 moment
 const moment = require('moment');
+// moment 是一个流行的 JavaScript 日期和时间处理库，它使得在处理、格式化和操作日期和时间时变得更加简单和灵活。
 const AccountModel = require('../../models/AccountModel');
 //导入中间件检测登录
 const checkLoginMiddleware = require('../../middlewares/checkLoginMiddleware');

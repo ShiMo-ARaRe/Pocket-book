@@ -5,7 +5,7 @@ const {secret} = require('../config/config');
 //声明中间件
 module.exports = (req, res, next) => {
   //获取 token
-  let token = req.get('token');
+  let token = req.get('token'); // 检测请求头中是否有token属性，并是否正确
   //判断
   if (!token) {
     return res.json({

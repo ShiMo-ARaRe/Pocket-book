@@ -1,3 +1,5 @@
+// models文件夹下的每个文件都对应Mongodb的bilibili数据库下的一个集合。
+
 //导入 mongoose
 const mongoose = require('mongoose');
 

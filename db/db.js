@@ -1,10 +1,13 @@
+// 用于连接Mongodb数据库
+
 /**
- * 
+ * // 注意：下面两行是注释
  * @param {*} success 数据库连接成功的回调
  * @param {*} error 数据库连接失败的回调
  */
+
 module.exports = function (success, error) {
-  //判断 error 为其设置默认值
+  //判断 error ，如果不是函数则为其设置默认值
   if(typeof error !== 'function'){
     error = () => {
       console.log('连接失败~~~');
@@ -17,7 +20,7 @@ module.exports = function (success, error) {
   const {DBHOST, DBPORT, DBNAME} = require('../config/config.js');
 
   //设置 strictQuery 为 true
-  mongoose.set('strictQuery', true);
+  mongoose.set('strictQuery', true); //设置严格查询模式
 
   //3. 连接 mongodb 服务                        数据库的名称
   mongoose.connect(`mongodb://${DBHOST}:${DBPORT}/${DBNAME}`);

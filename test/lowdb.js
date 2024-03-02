@@ -1,3 +1,5 @@
+// 不用数据库存储数据的话，就可以用lowdb将数据直接存储在json文档里
+
 //导入 lowdb
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')

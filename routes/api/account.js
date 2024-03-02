@@ -1,3 +1,5 @@
+// 记账本的增删查改，以及用token对用户进行身份验证
+
 //导入 express
 const express = require('express');
 //导入 jwt

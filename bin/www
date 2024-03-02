@@ -1,51 +1,51 @@
 #!/usr/bin/env node
 
+// 开启端口
 // www文件是整个项目的入口！
 
 //导入 db 函数
 const db = require('../db/db');
 
-// 这么做的目的：先让数据库连接成功后才能执行后续代码
+// db函数目的：使数据库连接成功后才能执行后续代码
+// 也就是说，成功连接数据库后，才能开放端口
+
 //调用 db 函数
 db(() => {
   
   /**
- * Module dependencies.
+ * Module dependencies. // 模块依赖
  */
-// 模块依赖
 
-var app = require('../app'); // 引入app模块
+
+var app = require('../app'); // 引入app模块，app模块是项目的核心
 var debug = require('debug')('accounts:server'); // 引入debug模块并设置命名空间为'accounts:server'
 var http = require('http'); // 引入http模块
 
 /**
- * Get port from environment and store in Express.
+ * Get port from environment and store in Express.  // 从环境变量中获取端口并存储在Express中
  */
-// 从环境变量中获取端口并存储在Express中
+
 
 var port = normalizePort(process.env.PORT || '80'); // 设置端口
 app.set('port', port); // 设置Express应用的端口
 
 /**
- * Create HTTP server.
+ * Create HTTP server. // 创建HTTP服务器
  */
-// 创建HTTP服务器
 
 var server = http.createServer(app); // 使用Express应用创建HTTP服务器
 
 /**
- * Listen on provided port, on all network interfaces.
+ * Listen on provided port, on all network interfaces. // 监听指定端口，对所有网络接口进行监听
  */
-// 监听指定端口，对所有网络接口进行监听
 
 server.listen(port); // 监听指定端口
 server.on('error', onError); // 监听服务器错误事件
 server.on('listening', onListening); // 监听服务器监听事件
 
 /**
- * Normalize a port into a number, string, or false.
+ * Normalize a port into a number, string, or false.  // 将端口规范化为数字、字符串或false
  */
-// 将端口规范化为数字、字符串或false
 
 function normalizePort(val) {
   var port = parseInt(val, 10); // 将传入的值转换为整数
@@ -64,9 +64,8 @@ function normalizePort(val) {
 }
 
 /**
- * Event listener for HTTP server "error" event.
+ * Event listener for HTTP server "error" event.  // HTTP服务器的“error”事件监听器
  */
-// HTTP服务器的“error”事件监听器
 
 function onError(error) {
   if (error.syscall !== 'listen') {
@@ -94,9 +93,8 @@ function onError(error) {
 }
 
 /**
- * Event listener for HTTP server "listening" event.
+ * Event listener for HTTP server "listening" event.  // HTTP服务器的“listening”事件监听器
  */
-// HTTP服务器的“listening”事件监听器
 
 function onListening() {
   var addr = server.address(); // 获取服务器地址信息
