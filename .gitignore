@@ -19,3 +19,7 @@ node_modules
 # 忽略个人或团队的自定义设置文件，如个人的配置文件、团队共享的设置文件等。
 # 通过使用.gitignore文件，可以确保不希望被版本控制的文件和目录不会被意外地包含在仓库中，
 # 从而保持仓库的整洁性，减少冲突和合并问题，并提高代码仓库的可维护性和可移植性。
+
+# 使用Git将代码上传到远程仓库时记得要设置用户名和邮箱（github账号
+# PS E:\QianDuan\NodeJS\代码\12_项目上线\代码> git config --global user.name "ShiMo-ARaRe"
+# PS E:\QianDuan\NodeJS\代码\12_项目上线\代码> git config --global user.email feizhijie2366@gmail.com
